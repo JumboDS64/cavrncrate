@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://3cryqlixtxli"]
+
+[ext_resource type="Script" path="res://entities/state_goal.gd" id="1_u4lyi"]
+[ext_resource type="Script" path="res://entities/sensor.gd" id="2_o1474"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jdjd"]
+size = Vector2(16, 16)
+
+[node name="state_goal" type="Node"]
+script = ExtResource("1_u4lyi")
+
+[node name="Sensor" type="Area2D" parent="."]
+script = ExtResource("2_o1474")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_8jdjd")

@@ -1,0 +1,165 @@
+[gd_scene load_steps=17 format=3 uid="uid://ndxhpwcqlayu"]
+
+[ext_resource type="Script" path="res://entities/entity_barrier.gd" id="1_pjwr2"]
+[ext_resource type="Texture2D" uid="uid://dymphbqar2gwj" path="res://assets/entities/barrier_shaft.png" id="2_4ci8d"]
+[ext_resource type="Texture2D" uid="uid://b5npinenhrf8o" path="res://assets/entities/barrier.png" id="2_ql3tf"]
+[ext_resource type="AudioStream" uid="uid://2srhp7cireo6" path="res://assets/sfx/barrier_extend.wav" id="4_whywa"]
+[ext_resource type="AudioStream" uid="uid://c8ekfdq4a0e1g" path="res://assets/sfx/barrier_retract.wav" id="5_bgtjc"]
+
+[sub_resource type="Animation" id="Animation_nqc0i"]
+length = 0.06667
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../audioplayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_whywa")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../audioplayer_shadow")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_whywa")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_uirq6"]
+
+[sub_resource type="Animation" id="Animation_7v3fk"]
+length = 0.06667
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../audioplayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_bgtjc")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../audioplayer_shadow")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_bgtjc")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4r77s"]
+_data = {
+"sfx_extend": SubResource("Animation_nqc0i"),
+"sfx_none": SubResource("Animation_uirq6"),
+"sfx_retract": SubResource("Animation_7v3fk")
+}
+
+[sub_resource type="Animation" id="Animation_qm0fh"]
+
+[sub_resource type="Animation" id="Animation_n8us1"]
+length = 1.06667
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("base:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.566667, 0.733333, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bee3l"]
+
+[sub_resource type="Animation" id="Animation_ti7xh"]
+
+[sub_resource type="Animation" id="Animation_ap18p"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ro14b"]
+_data = {
+"fall": SubResource("Animation_qm0fh"),
+"idle": SubResource("Animation_n8us1"),
+"jump": SubResource("Animation_bee3l"),
+"kick": SubResource("Animation_ti7xh"),
+"run": SubResource("Animation_ap18p")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r3g16"]
+resource_local_to_scene = true
+size = Vector2(16, 16)
+
+[node name="entity_barrier" type="Node"]
+script = ExtResource("1_pjwr2")
+
+[node name="sprite" type="Node2D" parent="."]
+
+[node name="shaft" type="Sprite2D" parent="sprite"]
+texture_repeat = 2
+texture = ExtResource("2_4ci8d")
+region_enabled = true
+region_rect = Rect2(0, 0, 0, 16)
+
+[node name="cap" type="Sprite2D" parent="sprite"]
+position = Vector2(8, 0)
+texture = ExtResource("2_ql3tf")
+hframes = 3
+vframes = 3
+frame = 2
+
+[node name="base" type="Sprite2D" parent="sprite"]
+texture = ExtResource("2_ql3tf")
+hframes = 3
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sprite"]
+libraries = {
+"entity_barrier": SubResource("AnimationLibrary_4r77s"),
+"entity_player": SubResource("AnimationLibrary_ro14b")
+}
+
+[node name="body" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body"]
+position = Vector2(8, 0)
+shape = SubResource("RectangleShape2D_r3g16")
+
+[node name="audioplayer" type="AudioStreamPlayer2D" parent="."]
+max_polyphony = 3
+
+[node name="audioplayer_shadow" type="AudioStreamPlayer2D" parent="."]
+bus = &"Shadow"

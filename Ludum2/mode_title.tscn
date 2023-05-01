@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://ck6656sbxyn7n"]
+
+[ext_resource type="Script" path="res://mode_title.gd" id="1_xiel3"]
+[ext_resource type="Texture2D" uid="uid://bk23tcvvtxft0" path="res://assets/bgs/cave.png" id="2_ejeps"]
+[ext_resource type="Texture2D" uid="uid://e2idstspmr6x" path="res://assets/gui/title.png" id="3_504mf"]
+
+[node name="mode_title" type="Node"]
+script = ExtResource("1_xiel3")
+
+[node name="bg" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(256, 192)
+texture = ExtResource("2_ejeps")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.835
+anchor_right = 0.5
+anchor_bottom = 0.835
+offset_left = -87.5
+offset_top = -9.28003
+offset_right = 87.5
+offset_bottom = 16.72
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Press any key to start"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(256, 192)
+texture = ExtResource("3_504mf")

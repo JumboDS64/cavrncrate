@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b26yqyvdck3w2"]
+
+[ext_resource type="Script" path="res://entities/state_player_kick.gd" id="1_yfo6p"]
+[ext_resource type="Script" path="res://entities/sensor.gd" id="2_u5asm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_31gcu"]
+radius = 16.0
+
+[node name="state_player_kick" type="Node"]
+script = ExtResource("1_yfo6p")
+
+[node name="Sensor" type="Area2D" parent="."]
+script = ExtResource("2_u5asm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sensor"]
+position = Vector2(10, -16)
+shape = SubResource("CircleShape2D_31gcu")

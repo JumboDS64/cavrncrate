@@ -1,0 +1,107 @@
+[gd_scene load_steps=9 format=3 uid="uid://pe8o14s3ov0w"]
+
+[ext_resource type="Script" path="res://entities/entity_crate.gd" id="1_lb236"]
+[ext_resource type="Texture2D" uid="uid://br6vfvduj124c" path="res://assets/entities/crate.png" id="2_yvvhm"]
+[ext_resource type="AudioStream" uid="uid://c8mubps6gplrl" path="res://assets/sfx/crate_hitwall.wav" id="3_egu62"]
+[ext_resource type="AudioStream" uid="uid://cpt2wwriblbbq" path="res://assets/sfx/crate_kicked.wav" id="4_mq17h"]
+
+[sub_resource type="Animation" id="Animation_xg4kj"]
+length = 0.40001
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../audioplayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_egu62")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../audioplayer_shadow")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_egu62")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_0s72r"]
+length = 0.50001
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../audioplayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_mq17h")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../audioplayer_shadow")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_mq17h")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j2u8l"]
+_data = {
+"sfx_hitwall": SubResource("Animation_xg4kj"),
+"sfx_kicked": SubResource("Animation_0s72r")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nl2my"]
+size = Vector2(31.5, 28)
+
+[node name="entity_crate" type="Node"]
+script = ExtResource("1_lb236")
+
+[node name="sprite" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="sprite"]
+position = Vector2(0, -16)
+texture = ExtResource("2_yvvhm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sprite"]
+libraries = {
+"entity_crate": SubResource("AnimationLibrary_j2u8l")
+}
+
+[node name="body" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body"]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_nl2my")
+
+[node name="audioplayer" type="AudioStreamPlayer2D" parent="."]
+max_polyphony = 3
+
+[node name="audioplayer_shadow" type="AudioStreamPlayer2D" parent="."]
+bus = &"Shadow"

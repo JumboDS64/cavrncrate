@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmok2wfd72w44"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_cmxt6"]
+
+[node name="main" type="Node"]
+script = ExtResource("1_cmxt6")
+
+[node name="audioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -3.0
+
+[node name="mode_none" type="Node" parent="."]
